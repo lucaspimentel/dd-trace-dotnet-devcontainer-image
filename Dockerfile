@@ -54,6 +54,18 @@ RUN wget https://apt.llvm.org/llvm.sh && \
     ln -s `which clang-tidy-16` /usr/bin/clang-tidy && \
     ln -s `which run-clang-tidy-16` /usr/bin/run-clang-tidy
 
+# Required to run all tests: install ASP.NET Core runtimes using install script
+COPY ./dotnet-install.sh .
+RUN chmod +x ./dotnet-install.sh && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 2.1 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 3.0 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 3.1 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 5.0 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 6.0 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 7.0 --install-dir /usr/share/dotnet --no-path && \
+    ./dotnet-install.sh --runtime aspnetcore --channel 8.0 --install-dir /usr/share/dotnet --no-path && \
+    rm dotnet-install.sh
+
 ENV \
     DOTNET_ROLL_FORWARD_TO_PRERELEASE=1 \
     CXX=clang++ \
