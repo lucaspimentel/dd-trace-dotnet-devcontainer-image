@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 as base
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS base
 
 # Based on https://github.com/dotnet/dotnet-docker/blob/34c81d5f9c8d56b36cc89da61702ccecbf00f249/src/sdk/6.0/bullseye-slim/amd64/Dockerfile
 # and https://github.com/dotnet/dotnet-docker/blob/1eab4cad6e2d42308bd93d3f0cc1f7511ac75882/src/sdk/5.0/buster-slim/amd64/Dockerfile
@@ -18,8 +18,8 @@ ENV \
 
 # Add nfpm source
 RUN echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | tee /etc/apt/sources.list.d/goreleaser.list \
-    && apt-get update \
-    && apt-get -y upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --fix-missing \
         git \
         procps \
